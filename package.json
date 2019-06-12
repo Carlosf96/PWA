@@ -1,5 +1,5 @@
 {
-  "name": "shopping-list",
+  "name": "pwa",
   "version": "1.0.0",
   "description": "a progressive web app that I can use to list items I want to buy and also store the list and total item cost",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "Carlos Franco",
   "license": "ISC",
   "dependencies": {
-    "hoodie": "28.2.2"
+    "hoodie": "^28.2.7"
   },
   "devDependencies": {
     "workbox-cli": "3.6.2"

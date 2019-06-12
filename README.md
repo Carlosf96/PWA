@@ -1,6 +1,6 @@
 *PWA*
 
-A progressive web app written in Node
+A progressive web app written with Vue and Node
 using Hapi[server-side], 
 CouchDB[server-side], 
 PouchDB[client-side], 
