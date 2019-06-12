@@ -7,7 +7,7 @@
     "start": "hoodie",
     "build": "workbox generateSW"
   },
-  "author": "Peter Mbanugo",
+  "author": "Carlos Franco",
   "license": "ISC",
   "dependencies": {
     "hoodie": "28.2.2"
