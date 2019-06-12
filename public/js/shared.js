@@ -1,3 +1,10 @@
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("sw.js")
+    .then(console.log)
+    .catch(console.error);
+}
+
 var username = hoodie.account.get('username').then(res => console.log(res));
 
 Vue.component('register-dialog', {
