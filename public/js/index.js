@@ -1,13 +1,13 @@
-const vm = new Vue({
+const vm = new Vue({//init Vue instance
   el: '#app',
-  data: {
+  data: {//state values
     name: '',
     cost: '',
     quantity: '',
     items: [],
     isLoggedIn: false
   },
-  computed: {
+  computed: {//prop to get total cost of items
     total: function() {
       return this.items.reduce((acc, cVal) => acc + cVal.subTotal, 0);
     }
@@ -34,6 +34,44 @@ const vm = new Vue({
           message: 'All fields are required'
         });
       }
+    },
+    deleteRow: function (itemId) { 
+      hoodie.store.withIdPrefix('item').remove(itemId);
+    },
+    saveList: function () {
+      hoodie.store
+        .withIdPrefix('item')
+        .findAll()
+        .then((items) => {
+          //stores the list
+          hoodie.store.withIdPrefix('list').add({
+            cost: this.total,
+            items: items
+          })
+        }).catch((err) => {
+          console.log(err);
+        });
+      
+      hoodie.store
+        .withIdPrefix('item')
+        .remove(items)
+      .then(() => {
+        //clears table
+        this.items = [];
+
+        //notifiy the user
+        var snackbarContainer = document.querySelector('#toast');
+        snackbarContainer.MaterialSnackbar.showSnackbar({
+          message: 'List savved succesfuly'
+        })
+      }).catch((err) => {
+        console.log(err);
+        //notify user of error
+        var snackbarContainer = document.querySelector('#toast');
+        snackbarContainer.MaterialSnackbar.showSnackbar({
+          message: err.message
+        })
+      });
     }
   },
   created() {
