@@ -3,7 +3,7 @@ Vue.component('register-dialog', {
     return {
       username: '',
       password: ''
-    }
+    };
   },
   props: ['toggleLoggedIn'],
   template: `
@@ -95,26 +95,88 @@ Vue.component('navigation', {
   </div>
   `,
   methods: {
-    showLogin: function() {
+    showLogin: function () {
       const loginDialog = document.querySelector("#login-dialog");
       dialogPolyfill.registerDialog(loginDialog);
       loginDialog.showModal();
     },
-    showRegister: function() {
+    showRegister: function () {
       const registerDialog = document.querySelector("#register-dialog");
       dialogPolyfill.registerDialog(registerDialog);
       registerDialog.showModal();
     },
-    logout: function() {
+    logout: function () {
       hoodie.account
         .signOut()
         .then(() => {
           this.toggleLoggedIn();
           window.location.reload();
         })
-        .catch(error => {
+        .catch(err => {
           alert("Could not logout");
         });
+    }
+  }
+});
+
+Vue.component('login-dialog', {
+  data() {
+    return {
+      username: '',
+      password: ''
+    };
+  },
+  props: ['toggleLoggedIn'],
+  template: `
+  <dialog id="login-dialog" class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Login</h4>
+    <div class="mdl-dialog__content">
+      <div class="mdl-grid center-items">
+        <!-- Simple Textfield -->
+        <div class="mdl-textfield mdl-js-textfield">
+          <input v-model="username" class="mdl-textfield__input" type="text" id="login-username">
+          <label class="mdl-textfield__label" for="login-username">Username</label>
+        </div>
+      </div>
+      <div class="mdl-grid center-items">
+        <!-- Simple Textfield -->
+        <div class="mdl-textfield mdl-js-textfield">
+          <input v-model="password" class="mdl-textfield__input" type="password" id="login-password">
+          <label class="mdl-textfield__label" for="login-password">Password</label>
+        </div>
+      </div>
+      <div class="mdl-grid center-items">
+        <!-- Simple Textfield -->
+        <div class="mdl-textfield mdl-js-textfield">
+          <span id="login-error"></span>
+        </div>
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button @click="closeLogin" type="button" class="mdl-button close">Cancel</button>
+      <button @click="login" type="button" class="mdl-button">Login</button>
+    </div>
+  </dialog>
+  `,
+  methods: {
+    closeLogin: function () {
+      const loginDialog = document.querySelector('#login-dialog');
+      dialogPolyfill.registerDialog(loginDialog);
+      loginDialog.close();
+    },
+    login: function (event) { 
+      hoddie.account
+        .signIn({
+          username: this.username,
+          password: this.password
+        })
+      .then(() => {
+        this.toggleLoggedIn();
+        this.closeLogin();
+      }).catch((err) => {
+        console.log(err);
+        document.querySelector('#login-error').innerHTML = 'Error logging in';
+      });
     }
   }
 })
