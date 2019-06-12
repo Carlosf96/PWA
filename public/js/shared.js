@@ -8,17 +8,17 @@ Vue.component('register-dialog', {
   props: ['toggleLoggedIn'],
   template: `
   <dialog id='register-dialog' class='mdl-dialog'>
-    <h4 class='mdl-dialog_title>Register</h4>
+    <h4 class='mdl-dialog_title'>Register</h4>
     <div class='mdl-dialog__content'>
       <div class='mdl-grid center-items'>
         <div class='mdl-textfield mdl-js-textfield'>
-          <input v-model='username' class='mdl-mdl-textfield__input' type='text' id='register-username'>
+          <input v-model='username' class='mdl-textfield__input' type='text' id='register-username'>
           <label class='mdl-textfield__label' for='register-username'>Username</label>
         </div>
       </div>
       <div class='mdl-grid center-items'>
         <div class='mdl-textfield mdl-js-textfield'>
-          <input v-model='password' class='mdl-mdl-textfield__input' type='password' id='register-password'>
+          <input v-model='password' class='mdl-textfield__input' type='password' id='register-password'>
           <label class='mdl-textfield__label' for='register-password'>Password</label>
         </div>
       </div>
@@ -165,7 +165,7 @@ Vue.component('login-dialog', {
       loginDialog.close();
     },
     login: function (event) { 
-      hoddie.account
+      hoodie.account
         .signIn({
           username: this.username,
           password: this.password

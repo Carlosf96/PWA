@@ -31,7 +31,7 @@ const vm = new Vue({//init Vue instance
       } else {
         const snackbarContainer = document.querySelector('#toast');
         snackbarContainer.MaterialSnackbar.showSnackbar({
-          message: 'All fields are required'
+          message: 'Please Fill in the forms!'
         });
       }
     },
@@ -54,15 +54,18 @@ const vm = new Vue({//init Vue instance
       
       hoodie.store
         .withIdPrefix('item')
-        .remove(items)
-      .then(() => {
+        .findAll()
+        .then((items) => {
+          
+        hoodie.store.remove(items)
+
         //clears table
         this.items = [];
 
         //notifiy the user
         var snackbarContainer = document.querySelector('#toast');
         snackbarContainer.MaterialSnackbar.showSnackbar({
-          message: 'List savved succesfuly'
+          message: 'List saved succesfuly'
         })
       }).catch((err) => {
         console.log(err);
@@ -74,9 +77,9 @@ const vm = new Vue({//init Vue instance
       });
     }
   },
-  created() {
+  created() {//lifecycle hook
     hoodie.store.withIdPrefix('item').on('add', item => vm.items.push(item));
-
+    hoodie.store.withIdPrefix('item').on('remove', deletedItem => (vm.items = vm.items.filter(item => item._id !== deletedItem._id)))
     //retrieve items on the current list
     hoodie.store
       .withIdPrefix('item')
