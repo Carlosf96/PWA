@@ -79,6 +79,7 @@ Vue.component('navigation', {
           <a v-show="!isLoggedIn" @click="showLogin" style="cursor: pointer" class="mdl-navigation__link login">Login</a>
           <a v-show="!isLoggedIn" @click="showRegister" style="cursor: pointer" class="mdl-navigation__link register">Register</a>
           <a v-show="isLoggedIn" @click="logout" style="cursor: pointer" class="mdl-navigation__link logout">Logout</a>
+          <a v-show="isLoggedIn" style="cursor: pointer" class="mdl-navigation__link username"> ${hoodie.account.username} </a>
         </nav>
       </div>
     </header>
