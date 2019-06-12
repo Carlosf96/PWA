@@ -17,7 +17,7 @@ const vm = new Vue({
 
     hoodie.account.get('session').then(function(session) {
       if (!session) {
-        // user is singed out
+        // user is signed out
         vm.isLoggedIn = false;
       } else if (session.invalid) {
         vm.isLoggedIn = false;
