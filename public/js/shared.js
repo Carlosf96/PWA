@@ -59,5 +59,62 @@ Vue.component('register-dialog', {
         });
       
     }
-  },
+  }
+});
+
+Vue.component('navigation', {
+  props: ['isLoggedIn', 'toggleLoggedIn'],
+  template: `
+  <div>
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Shopping List</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link" href="index.html">Home</a>
+          <a class="mdl-navigation__link" href="history.html">History</a>
+          <a v-show="!isLoggedIn" @click="showLogin" style="cursor: pointer" class="mdl-navigation__link login">Login</a>
+          <a v-show="!isLoggedIn" @click="showRegister" style="cursor: pointer" class="mdl-navigation__link register">Register</a>
+          <a v-show="isLoggedIn" @click="logout" style="cursor: pointer" class="mdl-navigation__link logout">Logout</a>
+        </nav>
+      </div>
+    </header>
+<div class="mdl-layout__drawer">
+<span class="mdl-layout-title">Shopping List</span>
+<nav class="mdl-navigation">
+<a class="mdl-navigation__link" href="index.html">Home</a>
+<a class="mdl-navigation__link" href="history.html">History</a>
+<a v-show="!isLoggedIn" @click="showLogin" style="cursor: pointer" class="mdl-navigation__link login">Login</a>
+<a v-show="!isLoggedIn" @click="showRegister" style="cursor: pointer" class="mdl-navigation__link register">Register</a>
+<a v-show="isLoggedIn" @click="logout" style="cursor: pointer" class="mdl-navigation__link logout">Logout</a>
+</nav>
+</div>
+  </div>
+  `,
+  methods: {
+    showLogin: function() {
+      const loginDialog = document.querySelector("#login-dialog");
+      dialogPolyfill.registerDialog(loginDialog);
+      loginDialog.showModal();
+    },
+    showRegister: function() {
+      const registerDialog = document.querySelector("#register-dialog");
+      dialogPolyfill.registerDialog(registerDialog);
+      registerDialog.showModal();
+    },
+    logout: function() {
+      hoodie.account
+        .signOut()
+        .then(() => {
+          this.toggleLoggedIn();
+          window.location.reload();
+        })
+        .catch(error => {
+          alert("Could not logout");
+        });
+    }
+  }
 })
